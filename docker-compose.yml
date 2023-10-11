@@ -1,0 +1,49 @@
+version: '3.1'
+services:
+  event-store:
+    build:
+      context: ./EventStore/eventService
+      dockerfile: dockerfile
+    image: event-store
+    container_name: event-store
+    ports:
+      - "9090:9090"
+    depends_on:
+      - events-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://events-db:5432/events_db
+
+  events-db:
+    image: postgres:14-alpine
+    container_name: events-db
+    ports:
+      - "6541:5432"
+    environment:
+      POSTGRES_DB: events_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: iamroot
+
+  booking-service:
+    build:
+      context: ./BookingService
+      dockerfile: dockerfile
+    image: booking-service
+    container_name: booking-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - booking-db
+      - event-store
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://booking-db:5432/booking_db
+      - EVENT_STORE_URL=http://event-store:9090
+
+  booking-db:
+    image: postgres:14-alpine
+    container_name: ewm-db
+    ports:
+      - "6542:5432"
+    environment:
+      POSTGRES_DB: booking_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: iamroot
