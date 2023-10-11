@@ -3,13 +3,23 @@ package eventsStore.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import dto.Status;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-public class Events {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "events")
+public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

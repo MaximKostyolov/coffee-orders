@@ -62,19 +62,19 @@ public class BookingOrderServiceImpl implements BookingOrderService {
             orderEventClient.post("", new HashMap<>(), orderEvent);
             sendAcceptedEvent(orderEvent);
             Timer timer = new Timer();
-            timer.schedule(new TimeTaskReady(getOrderEventById(orderEvent.getOrderId())),
+            timer.schedule(new TimeTaskReady(orderEvent.getOrderId()),
                     Date.from(orderEvent.getExpectedTimeOfIssue().atZone(ZoneId.systemDefault()).toInstant()));
 
         } else {
             orderEvent.setExpectedTimeOfIssue(employee.getTimeToAvailable().plusSeconds(product.getCookingTime()));
             orderEventClient.post("", new HashMap<>(), orderEvent);
             Timer timer = new Timer();
-            timer.schedule(new TimeTaskAccepted(getOrderEventById(orderEvent.getOrderId())),
+            timer.schedule(new TimeTaskAccepted(orderEvent.getOrderId()),
                     Date.from(employee.getTimeToAvailable().atZone(ZoneId.systemDefault()).toInstant()));
             employee.setTimeToAvailable(orderEvent.getExpectedTimeOfIssue());
             employee.setCountOrder(employee.getCountOrder() + 1);
             employeeService.updateEmployee(employee.getId(), employee);
-            timer.schedule(new TimeTaskReady(getOrderEventById(orderEvent.getOrderId())),
+            timer.schedule(new TimeTaskReady(orderEvent.getOrderId()),
                     Date.from(orderEvent.getExpectedTimeOfIssue().atZone(ZoneId.systemDefault()).toInstant()));
 
         }
@@ -101,7 +101,23 @@ public class BookingOrderServiceImpl implements BookingOrderService {
         return orderClient.get("?orderId={orderId}", parametrs).getBody();
     }
 
-    private OrderEvent getOrderEventById(Integer orderId) {
+    @Override
+    public void issueOrder(int orderId) {
+        OrderEvent orderEvent = getOrderEventById(orderId);
+        if (orderEvent.getStatus().equals(Status.CANCELLED)) {
+            throw new UnsupportedStateException("Order with id = " + orderId + " already cancelled");
+        } else if (orderEvent.getStatus().equals(Status.ISSUE)) {
+            throw new UnsupportedStateException("Order with id = " + orderId + " already issue");
+        } else if (orderEvent.getStatus().equals(Status.READY)) {
+            orderEvent.setStatus(Status.ISSUE);
+            orderEvent.setTimeStamp(LocalDateTime.now());
+            orderEventClient.post("", new HashMap<>(), orderEvent);
+        } else {
+            throw new UnsupportedStateException("Order with id = " + orderId + " is not ready yet");
+        }
+    }
+
+    private static OrderEvent getOrderEventById(Integer orderId) {
         Map<String, Object> parametrs = Map.of("orderId", orderId);
         return orderEventClient.get("?orderId={orderId}", parametrs).getBody();
     }
@@ -128,14 +144,15 @@ public class BookingOrderServiceImpl implements BookingOrderService {
 
     private static class TimeTaskAccepted extends TimerTask {
 
-        private OrderEvent orderEvent;
+        private int orderId;
 
-        public TimeTaskAccepted(OrderEvent orderEvent) {
-            this.orderEvent = orderEvent;
+        public TimeTaskAccepted(int orderId) {
+            this.orderId = orderId;
         }
 
         @Override
         public void run() {
+            OrderEvent orderEvent = getOrderEventById(orderId);
             if (!orderEvent.getStatus().equals(Status.CANCELLED)) {
                 sendAcceptedEvent(orderEvent);
             }
@@ -145,14 +162,15 @@ public class BookingOrderServiceImpl implements BookingOrderService {
 
     private static class TimeTaskReady extends TimerTask {
 
-        private OrderEvent orderEvent;
+        private int orderId;
 
-        public TimeTaskReady(OrderEvent orderEvent) {
-            this.orderEvent = orderEvent;
+        public TimeTaskReady(int orderId) {
+            this.orderId = orderId;
         }
 
         @Override
         public void run() {
+            OrderEvent orderEvent = getOrderEventById(orderId);
             if (!orderEvent.getStatus().equals(Status.CANCELLED)) {
                 sendReadyEvent(orderEvent);
             }

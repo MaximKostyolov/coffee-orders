@@ -9,4 +9,6 @@ public interface OrderService {
 
     Order findOrder(int id);
 
+    OrderEvent findLastOrderEvent(int orderId);
+
 }

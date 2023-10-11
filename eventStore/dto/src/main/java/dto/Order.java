@@ -30,7 +30,11 @@ public class Order {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime timeStamp;
+    private LocalDateTime registeredTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime expectedTimeOfIssue;
 
     List<EventView> events;
 

@@ -31,14 +31,14 @@ public class OrderController {
         bookingOrderService.createOrder(newOrderDto);
     }
 
-    @PatchMapping("/{orderId}")
+    @PatchMapping("/{orderId}/cancel")
     public void cancelOrder(@PathVariable int orderId, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту: '{} {}', Строка параметров запроса: '{}'",
                 request.getMethod(), request.getRequestURI(), request.getQueryString());
         bookingOrderService.cancelOrder(orderId);
     }
 
-    @PatchMapping("/{orderId}")
+    @PatchMapping("/{orderId}/issue")
     public void issueOrder(@PathVariable int orderId, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту: '{} {}', Строка параметров запроса: '{}'",
                 request.getMethod(), request.getRequestURI(), request.getQueryString());
