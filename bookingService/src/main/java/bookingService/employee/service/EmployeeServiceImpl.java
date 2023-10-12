@@ -51,7 +51,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() ->
                 new NotFoundException("Employee with id = " + employeeId + " not found"));
         if (updatedEmployee.getPhoneNumber().equals(employee.getPhoneNumber())) {
-            employeeRepository.deleteById(employeeId);
             return employeeRepository.save(updatedEmployee);
         } else {
             try {
@@ -82,6 +81,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         } else {
             return employeeRepository.findFirstEmployeeToAvailable();
         }
+    }
+
+    @Override
+    public Employee updateEmployee(int employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(() ->
+                new NotFoundException("Employee with id = " + employeeId + " not found"));
+        employee.setOnShift(true);
+        return employeeRepository.save(employee);
     }
 
 }

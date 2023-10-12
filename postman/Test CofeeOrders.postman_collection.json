@@ -1,0 +1,692 @@
+{
+	"info": {
+		"_postman_id": "e7164818-80a5-46f8-8d30-6c1814565541",
+		"name": "Test CofeeOrders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24809047"
+	},
+	"item": [
+		{
+			"name": "Create Customers",
+			"item": [
+				{
+					"name": "Add Customer1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"var json = pm.response.json();\r",
+									"pm.environment.set(\"customer1 Id\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Александр\",\r\n    \"phoneNumber\": \"89373381361\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Customer2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"var json = pm.response.json();\r",
+									"pm.environment.set(\"customer2 Id\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Айдар\",\r\n    \"phoneNumber\": \"89270813182\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create Products",
+			"item": [
+				{
+					"name": "Add Product1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"var json = pm.response.json();\r",
+									"pm.environment.set(\"product1 Id\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Капучино\",\r\n    \"price\": \"200\",\r\n    \"cookingTime\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"var json = pm.response.json();\r",
+									"pm.environment.set(\"product2 Id\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Латте\",\r\n    \"price\": \"250\",\r\n    \"cookingTime\": \"10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create Employee",
+			"item": [
+				{
+					"name": "Add Employee1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"var json = pm.response.json();\r",
+									"pm.environment.set(\"employee1 Id\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Артур\",\r\n    \"position\": \"Бариста\",\r\n    \"phoneNumber\": \"89273087249\",\r\n    \"onShift\": \"true\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employees",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Employee2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"var json = pm.response.json();\r",
+									"pm.environment.set(\"employee2 Id\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Алёна\",\r\n    \"position\": \"Старший бариста\",\r\n    \"phoneNumber\": \"89373609428\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employees",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create Orders",
+			"item": [
+				{
+					"name": "Add Order1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var json = pm.response.json();\r",
+									"pm.environment.set(\"order1 Id\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": \"1\",\r\n    \"productId\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Order2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var json = pm.response.json();\r",
+									"pm.environment.set(\"order2 Id\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": \"2\",\r\n    \"productId\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Orders",
+			"item": [
+				{
+					"name": "Get order1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(200);   \r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"const target = pm.response.json();\r",
+									"var query = {};\r",
+									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});\r",
+									"\r",
+									"pm.test(\"Запрос на участие должен содержать поля orderId, customerId, employeeId, productId, price, status, registeredTime, expectedTimeOfIssue, events\", function () {\r",
+									"pm.expect(target).to.have.property('orderId');\r",
+									"pm.expect(target).to.have.property('customerId');\r",
+									"pm.expect(target).to.have.property('employeeId');\r",
+									"pm.expect(target).to.have.property('productId');\r",
+									"pm.expect(target).to.have.property('price');\r",
+									"pm.expect(target).to.have.property('status');\r",
+									"pm.expect(target).to.have.property('registeredTime');\r",
+									"pm.expect(target).to.have.property('expectedTimeOfIssue');\r",
+									"pm.expect(target).to.have.property('events');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие orderId, customerId, employeeId, productId\", function () {\r",
+									"    pm.expect(target.orderId).equal(pm.environment.get(\"order1 Id\"));\r",
+									"    pm.expect(target.customerId).equal(pm.environment.get(\"customer1 Id\"));\r",
+									"    pm.expect(target.employeeId).equal(pm.environment.get(\"employee1 Id\"));\r",
+									"    pm.expect(target.productId).equal(pm.environment.get(\"product1 Id\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{order1 Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{order1 Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get order2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(200);   \r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"const target = pm.response.json();\r",
+									"var query = {};\r",
+									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});\r",
+									"\r",
+									"pm.test(\"Запрос на участие должен содержать поля orderId, customerId, employeeId, productId, price, status, registeredTime, expectedTimeOfIssue, events\", function () {\r",
+									"pm.expect(target).to.have.property('orderId');\r",
+									"pm.expect(target).to.have.property('customerId');\r",
+									"pm.expect(target).to.have.property('employeeId');\r",
+									"pm.expect(target).to.have.property('productId');\r",
+									"pm.expect(target).to.have.property('price');\r",
+									"pm.expect(target).to.have.property('status');\r",
+									"pm.expect(target).to.have.property('registeredTime');\r",
+									"pm.expect(target).to.have.property('expectedTimeOfIssue');\r",
+									"pm.expect(target).to.have.property('events');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие orderId, customerId, employeeId, productId\", function () {\r",
+									"    pm.expect(target.orderId).equal(pm.environment.get(\"order2 Id\"));\r",
+									"    pm.expect(target.customerId).equal(pm.environment.get(\"customer2 Id\"));\r",
+									"    pm.expect(target.employeeId).equal(pm.environment.get(\"employee1 Id\"));\r",
+									"    pm.expect(target.productId).equal(pm.environment.get(\"product2 Id\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{order2 Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{order2 Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get order1 after order ready",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(200);   \r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"const target = pm.response.json();\r",
+									"var query = {};\r",
+									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});\r",
+									"\r",
+									"pm.test(\"Запрос на участие должен содержать поля orderId, customerId, employeeId, productId, price, status, registeredTime, expectedTimeOfIssue, events\", function () {\r",
+									"pm.expect(target).to.have.property('orderId');\r",
+									"pm.expect(target).to.have.property('customerId');\r",
+									"pm.expect(target).to.have.property('employeeId');\r",
+									"pm.expect(target).to.have.property('productId');\r",
+									"pm.expect(target).to.have.property('price');\r",
+									"pm.expect(target).to.have.property('status');\r",
+									"pm.expect(target).to.have.property('registeredTime');\r",
+									"pm.expect(target).to.have.property('expectedTimeOfIssue');\r",
+									"pm.expect(target).to.have.property('events');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие orderId, customerId, employeeId, productId\", function () {\r",
+									"    pm.expect(target.orderId).equal(pm.environment.get(\"order1 Id\"));\r",
+									"    pm.expect(target.customerId).equal(pm.environment.get(\"customer1 Id\"));\r",
+									"    pm.expect(target.employeeId).equal(pm.environment.get(\"employee1 Id\"));\r",
+									"    pm.expect(target.productId).equal(pm.environment.get(\"product1 Id\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие статуса READY\", function () {\r",
+									"    pm.expect(target.status).equal(\"READY\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие events\", function () {\r",
+									"    pm.expect(target.events.size()).equal(3);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, [2]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{order1 Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{order1 Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get order2 after order ready",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(200);   \r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"const target = pm.response.json();\r",
+									"var query = {};\r",
+									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});\r",
+									"\r",
+									"pm.test(\"Запрос на участие должен содержать поля orderId, customerId, employeeId, productId, price, status, registeredTime, expectedTimeOfIssue, events\", function () {\r",
+									"pm.expect(target).to.have.property('orderId');\r",
+									"pm.expect(target).to.have.property('customerId');\r",
+									"pm.expect(target).to.have.property('employeeId');\r",
+									"pm.expect(target).to.have.property('productId');\r",
+									"pm.expect(target).to.have.property('price');\r",
+									"pm.expect(target).to.have.property('status');\r",
+									"pm.expect(target).to.have.property('registeredTime');\r",
+									"pm.expect(target).to.have.property('expectedTimeOfIssue');\r",
+									"pm.expect(target).to.have.property('events');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие orderId, customerId, employeeId, productId\", function () {\r",
+									"    pm.expect(target.orderId).equal(pm.environment.get(\"order2 Id\"));\r",
+									"    pm.expect(target.customerId).equal(pm.environment.get(\"customer2 Id\"));\r",
+									"    pm.expect(target.employeeId).equal(pm.environment.get(\"employee1 Id\"));\r",
+									"    pm.expect(target.productId).equal(pm.environment.get(\"product2 Id\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие статуса READY\", function () {\r",
+									"    pm.expect(target.status).equal(\"READY\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие events\", function () {\r",
+									"    pm.expect(target.events.size()).equal(3);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, [11]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{order2 Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{order2 Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "customer1 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "customer2 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "product1 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "product2 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "employee1 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "employee2 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "order1 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "order2 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

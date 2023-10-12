@@ -27,7 +27,7 @@ public class Customer {
     private String name;
 
     @NotBlank
-    @Pattern(regexp = "^\\d{11}$")
+    @Pattern(regexp = "^\\d{11}$") // номер телефона, начиная с 7 или 8 без пробелов и прочих символов
     @Column(name = "phone")
     private String phoneNumber;
 

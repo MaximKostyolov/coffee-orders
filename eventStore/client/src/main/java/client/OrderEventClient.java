@@ -35,7 +35,23 @@ public class OrderEventClient {
     }
 
     public ResponseEntity<OrderEvent> get(String path, Map<String, Object> parameters) {
-        return makeAndSendRequest(HttpMethod.GET, path, parameters, new OrderEvent());
+        return makeAndSendRequest(HttpMethod.GET, path, parameters);
+    }
+
+    private ResponseEntity<OrderEvent> makeAndSendRequest(HttpMethod get, String path, Map<String, Object> parameters) {
+        HttpEntity<OrderEvent> requestEntity = new HttpEntity<>(new OrderEvent());
+
+        ResponseEntity<OrderEvent> eventStoreResponse;
+        try {
+            if (parameters != null) {
+                eventStoreResponse = rest.exchange(path, get, requestEntity, OrderEvent.class, parameters);
+            } else {
+                eventStoreResponse = rest.exchange(path, get, requestEntity, OrderEvent.class);
+            }
+        } catch (HttpStatusCodeException e) {
+            throw new ResponseStatusException(e.getStatusCode());
+        }
+        return prepareEventStoreResponse(eventStoreResponse);
     }
 
     private ResponseEntity<OrderEvent> makeAndSendRequest(HttpMethod method, String path,

@@ -34,6 +34,6 @@ public class Product {
 
     @NotNull
     @Column(name = "cooking_time", nullable = false)
-    private Integer cookingTime;
+    private Integer cookingTime; // время приготовления в секундах для удобства тестирования
 
 }

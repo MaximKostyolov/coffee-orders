@@ -17,13 +17,11 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     @Query(value = "select e.order_id, e.employee_id, e.status, e.timestamp " +
             "from events e " +
             "where (e.order_id = ?1) " +
-            "group by e.order_id " +
             "order by e.timestamp DESC", nativeQuery = true)
     List<OrderEventView> findEventList(int id);
 
     @Query(value = "select * from events e " +
             "where (e.order_id = ?1) " +
-            "group by e.order_id " +
             "order by e.timestamp DESC " +
             "limit 1", nativeQuery = true)
     Event findLastEvent(int id);

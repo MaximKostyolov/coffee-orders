@@ -19,4 +19,6 @@ public interface EmployeeService {
 
     Employee getAvaibleEmployee();
 
+    Employee updateEmployee(int employeeId);
+
 }

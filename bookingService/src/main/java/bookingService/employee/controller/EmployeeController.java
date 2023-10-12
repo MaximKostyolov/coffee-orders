@@ -49,6 +49,14 @@ public class EmployeeController {
         return employeeService.updateEmployee(employeeId, updatedEmployee);
     }
 
+    @PatchMapping("/onshift/{employeeId}")
+    public Employee updateEmployee(@PathVariable int employeeId,
+                                   HttpServletRequest request) {
+        log.info("Получен запрос к эндпоинту: '{} {}', Строка параметров запроса: '{}'",
+                request.getMethod(), request.getRequestURI(), request.getQueryString());
+        return employeeService.updateEmployee(employeeId);
+    }
+
     @GetMapping("/{productId}")
     public Employee getEmployeeById(@PathVariable int employeeId, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту: '{} {}', Строка параметров запроса: '{}'",

@@ -46,7 +46,6 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
                 new NotFoundException("Customer with id = " + customerId + " not found"));
         if (updatedCustomer.getPhoneNumber().equals(customer.getPhoneNumber())) {
-            customerRepository.deleteById(customerId);
             return customerRepository.save(updatedCustomer);
         } else {
             try {
