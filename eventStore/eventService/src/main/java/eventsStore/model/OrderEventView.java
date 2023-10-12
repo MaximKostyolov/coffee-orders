@@ -1,7 +1,5 @@
 package eventsStore.model;
 
-import dto.Status;
-
 import java.time.LocalDateTime;
 
 public interface OrderEventView {
@@ -10,7 +8,7 @@ public interface OrderEventView {
 
     Integer getEmployeeId();
 
-    Status getStatus();
+    String getStatus();
 
     LocalDateTime getTimeStamp();
 

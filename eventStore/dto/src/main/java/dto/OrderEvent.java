@@ -36,7 +36,7 @@ public class OrderEvent {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expectedTimeOfIssue;
 
-    private Status status;
+    private String status;
 
     private String cancelCause;
 

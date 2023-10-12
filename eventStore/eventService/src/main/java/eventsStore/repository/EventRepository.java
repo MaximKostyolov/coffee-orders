@@ -9,9 +9,10 @@ import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Integer> {
 
-    @Query(value = "select * from events e " +
-            "where (e.order_id = ?1) " +
-            "and (e.status = 'REGISTERED')", nativeQuery = true)
+    @Query("select e " +
+           "from Event e " +
+           "where (e.orderId = ?1) " +
+           "and (e.status = 'REGISTERED')")
     Event findRegisteredEvent(int id);
 
     @Query(value = "select e.order_id, e.employee_id, e.status, e.timestamp " +

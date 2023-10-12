@@ -291,10 +291,7 @@
 								"exec": [
 									"pm.test(\"Ответ должен содержать код статуса 201\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"var json = pm.response.json();\r",
-									"pm.environment.set(\"order1 Id\", json.id);"
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -334,9 +331,7 @@
 									"pm.test(\"Ответ должен содержать код статуса 201\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
-									"\r",
-									"var json = pm.response.json();\r",
-									"pm.environment.set(\"order2 Id\", json.id);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -353,6 +348,16 @@
 									"language": "json"
 								}
 							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								""
+							]
 						}
 					},
 					"response": []
@@ -676,12 +681,12 @@
 		},
 		{
 			"key": "order1 Id",
-			"value": "",
+			"value": "1",
 			"type": "string"
 		},
 		{
 			"key": "order2 Id",
-			"value": "",
+			"value": "2",
 			"type": "string"
 		},
 		{

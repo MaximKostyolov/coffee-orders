@@ -17,7 +17,7 @@ public class EventView {
 
     private Integer employeeId;
 
-    private Status status;
+    private String status;
 
     private LocalDateTime timeStamp;
 

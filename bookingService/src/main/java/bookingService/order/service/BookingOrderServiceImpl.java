@@ -12,7 +12,6 @@ import client.OrderClient;
 import client.OrderEventClient;
 import dto.Order;
 import dto.OrderEvent;
-import dto.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -78,12 +77,12 @@ public class BookingOrderServiceImpl implements BookingOrderService {
     @Override
     public void cancelOrder(int orderId) {
         OrderEvent orderEvent = getOrderEventById(orderId);
-        if (orderEvent.getStatus().equals(Status.CANCELLED)) {
+        if (orderEvent.getStatus().equals("CANCELLED")) {
             throw new UnsupportedStateException("Order with id = " + orderId + " already cancelled");
-        } else if (orderEvent.getStatus().equals(Status.ISSUE)) {
+        } else if (orderEvent.getStatus().equals("ISSUE")) {
             throw new UnsupportedStateException("Order with id = " + orderId + " already issue");
         } else {
-            orderEvent.setStatus(Status.CANCELLED);
+            orderEvent.setStatus("CANCELLED");
             orderEvent.setTimeStamp(LocalDateTime.now());
             orderEventClient.post("", new HashMap<>(), orderEvent);
         }
@@ -98,12 +97,12 @@ public class BookingOrderServiceImpl implements BookingOrderService {
     @Override
     public void issueOrder(int orderId) {
         OrderEvent orderEvent = getOrderEventById(orderId);
-        if (orderEvent.getStatus().equals(Status.CANCELLED)) {
+        if (orderEvent.getStatus().equals("CANCELLED")) {
             throw new UnsupportedStateException("Order with id = " + orderId + " already cancelled");
-        } else if (orderEvent.getStatus().equals(Status.ISSUE)) {
+        } else if (orderEvent.getStatus().equals("ISSUE")) {
             throw new UnsupportedStateException("Order with id = " + orderId + " already issue");
-        } else if (orderEvent.getStatus().equals(Status.READY)) {
-            orderEvent.setStatus(Status.ISSUE);
+        } else if (orderEvent.getStatus().equals("READY")) {
+            orderEvent.setStatus("ISSUE");
             orderEvent.setTimeStamp(LocalDateTime.now());
             orderEventClient.post("", new HashMap<>(), orderEvent);
         } else {
@@ -145,7 +144,7 @@ public class BookingOrderServiceImpl implements BookingOrderService {
         OrderEvent acceptedEvent = OrderEvent.builder()
                 .orderId(orderEvent.getOrderId())
                 .employeeId(orderEvent.getEmployeeId())
-                .status(Status.ACCEPTED)
+                .status("ACCEPTED")
                 .timeStamp(LocalDateTime.now())
                 .build();
         orderEventClient.post("", new HashMap<>(), acceptedEvent);
@@ -155,8 +154,8 @@ public class BookingOrderServiceImpl implements BookingOrderService {
         OrderEvent acceptedEvent = OrderEvent.builder()
                 .orderId(orderEvent.getOrderId())
                 .employeeId(orderEvent.getEmployeeId())
-                .status(Status.ACCEPTED)
-                .timeStamp(orderEvent.getExpectedTimeOfIssue())
+                .status("READY")
+                .timeStamp(LocalDateTime.now())
                 .build();
         orderEventClient.post("", new HashMap<>(), acceptedEvent);
     }
@@ -172,7 +171,7 @@ public class BookingOrderServiceImpl implements BookingOrderService {
         @Override
         public void run() {
             OrderEvent orderEvent = getOrderEventById(orderId);
-            if (!orderEvent.getStatus().equals(Status.CANCELLED)) {
+            if (!orderEvent.getStatus().equals("CANCELLED")) {
                 sendAcceptedEvent(orderEvent);
             }
         }
@@ -190,7 +189,7 @@ public class BookingOrderServiceImpl implements BookingOrderService {
         @Override
         public void run() {
             OrderEvent orderEvent = getOrderEventById(orderId);
-            if (!orderEvent.getStatus().equals(Status.CANCELLED)) {
+            if (!orderEvent.getStatus().equals("CANCELLED")) {
                 sendReadyEvent(orderEvent);
             }
         }

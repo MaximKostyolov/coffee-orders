@@ -26,7 +26,7 @@ public class Order {
 
     private Integer price;
 
-    private Status status;
+    private String status;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

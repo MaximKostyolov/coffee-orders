@@ -1,7 +1,6 @@
 package eventsStore.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import dto.Status;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,9 +41,8 @@ public class Event {
     @Column(name = "price")
     private Integer price;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private Status status;
+    private String status;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

@@ -2,7 +2,6 @@ package bookingService.order.mapper;
 
 import bookingService.order.dto.NewOrderDto;
 import dto.OrderEvent;
-import dto.Status;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +12,7 @@ public class OrderMapper {
                     .customerId(orderDto.getCustomerId())
                     .productId(orderDto.getProductId())
                     .timeStamp(LocalDateTime.now())
-                    .status(Status.REGISTERED)
+                    .status("REGISTERED")
                     .build();
     }
 
