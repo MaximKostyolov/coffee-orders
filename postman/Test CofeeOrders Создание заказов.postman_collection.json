@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "e7164818-80a5-46f8-8d30-6c1814565541",
-		"name": "Test CofeeOrders",
+		"name": "Test CofeeOrders Создание заказов",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24809047"
 	},
@@ -124,7 +124,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Капучино\",\r\n    \"price\": \"200\",\r\n    \"cookingTime\": \"1\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Капучино\",\r\n    \"price\": \"200\",\r\n    \"cookingTime\": \"5\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -397,10 +397,10 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Соответствие orderId, customerId, employeeId, productId\", function () {\r",
-									"    pm.expect(target.orderId).equal(pm.environment.get(\"order1 Id\"));\r",
-									"    pm.expect(target.customerId).equal(pm.environment.get(\"customer1 Id\"));\r",
-									"    pm.expect(target.employeeId).equal(pm.environment.get(\"employee1 Id\"));\r",
-									"    pm.expect(target.productId).equal(pm.environment.get(\"product1 Id\"));\r",
+									"    pm.expect(target.orderId).equal(1);\r",
+									"    pm.expect(target.customerId).equal(1);\r",
+									"    pm.expect(target.employeeId).equal(1);\r",
+									"    pm.expect(target.productId).equal(1);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -453,157 +453,11 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Соответствие orderId, customerId, employeeId, productId\", function () {\r",
-									"    pm.expect(target.orderId).equal(pm.environment.get(\"order2 Id\"));\r",
-									"    pm.expect(target.customerId).equal(pm.environment.get(\"customer2 Id\"));\r",
-									"    pm.expect(target.employeeId).equal(pm.environment.get(\"employee1 Id\"));\r",
-									"    pm.expect(target.productId).equal(pm.environment.get(\"product2 Id\"));\r",
+									"    pm.expect(target.orderId).equal(2);\r",
+									"    pm.expect(target.customerId).equal(2);\r",
+									"    pm.expect(target.employeeId).equal(1);\r",
+									"    pm.expect(target.productId).equal(2);\r",
 									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/orders/{{order2 Id}}",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"orders",
-								"{{order2 Id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get order1 after order ready",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
-									"    pm.response.to.have.status(200);   \r",
-									"    pm.response.to.be.withBody;\r",
-									"    pm.response.to.be.json;\r",
-									"});\r",
-									"\r",
-									"const target = pm.response.json();\r",
-									"var query = {};\r",
-									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});\r",
-									"\r",
-									"pm.test(\"Запрос на участие должен содержать поля orderId, customerId, employeeId, productId, price, status, registeredTime, expectedTimeOfIssue, events\", function () {\r",
-									"pm.expect(target).to.have.property('orderId');\r",
-									"pm.expect(target).to.have.property('customerId');\r",
-									"pm.expect(target).to.have.property('employeeId');\r",
-									"pm.expect(target).to.have.property('productId');\r",
-									"pm.expect(target).to.have.property('price');\r",
-									"pm.expect(target).to.have.property('status');\r",
-									"pm.expect(target).to.have.property('registeredTime');\r",
-									"pm.expect(target).to.have.property('expectedTimeOfIssue');\r",
-									"pm.expect(target).to.have.property('events');\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Соответствие orderId, customerId, employeeId, productId\", function () {\r",
-									"    pm.expect(target.orderId).equal(pm.environment.get(\"order1 Id\"));\r",
-									"    pm.expect(target.customerId).equal(pm.environment.get(\"customer1 Id\"));\r",
-									"    pm.expect(target.employeeId).equal(pm.environment.get(\"employee1 Id\"));\r",
-									"    pm.expect(target.productId).equal(pm.environment.get(\"product1 Id\"));\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Соответствие статуса READY\", function () {\r",
-									"    pm.expect(target.status).equal(\"READY\");\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Соответствие events\", function () {\r",
-									"    pm.expect(target.events.size()).equal(3);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"setTimeout(function(){}, [2]);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/orders/{{order1 Id}}",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"orders",
-								"{{order1 Id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get order2 after order ready",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
-									"    pm.response.to.have.status(200);   \r",
-									"    pm.response.to.be.withBody;\r",
-									"    pm.response.to.be.json;\r",
-									"});\r",
-									"\r",
-									"const target = pm.response.json();\r",
-									"var query = {};\r",
-									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});\r",
-									"\r",
-									"pm.test(\"Запрос на участие должен содержать поля orderId, customerId, employeeId, productId, price, status, registeredTime, expectedTimeOfIssue, events\", function () {\r",
-									"pm.expect(target).to.have.property('orderId');\r",
-									"pm.expect(target).to.have.property('customerId');\r",
-									"pm.expect(target).to.have.property('employeeId');\r",
-									"pm.expect(target).to.have.property('productId');\r",
-									"pm.expect(target).to.have.property('price');\r",
-									"pm.expect(target).to.have.property('status');\r",
-									"pm.expect(target).to.have.property('registeredTime');\r",
-									"pm.expect(target).to.have.property('expectedTimeOfIssue');\r",
-									"pm.expect(target).to.have.property('events');\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Соответствие orderId, customerId, employeeId, productId\", function () {\r",
-									"    pm.expect(target.orderId).equal(pm.environment.get(\"order2 Id\"));\r",
-									"    pm.expect(target.customerId).equal(pm.environment.get(\"customer2 Id\"));\r",
-									"    pm.expect(target.employeeId).equal(pm.environment.get(\"employee1 Id\"));\r",
-									"    pm.expect(target.productId).equal(pm.environment.get(\"product2 Id\"));\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Соответствие статуса READY\", function () {\r",
-									"    pm.expect(target.status).equal(\"READY\");\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Соответствие events\", function () {\r",
-									"    pm.expect(target.events.size()).equal(3);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"setTimeout(function(){}, [11]);"
 								],
 								"type": "text/javascript"
 							}

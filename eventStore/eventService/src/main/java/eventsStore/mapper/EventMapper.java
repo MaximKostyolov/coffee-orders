@@ -4,7 +4,6 @@ import dto.EventView;
 import dto.Order;
 import dto.OrderEvent;
 import eventsStore.model.Event;
-import eventsStore.model.OrderEventView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,24 +36,24 @@ public class EventMapper {
                 .build();
     }
 
-    public static List<EventView> toEventViewList(List<OrderEventView> orderEventViewList) {
+    public static List<EventView> toEventViewList(List<Event> eventList) {
         List<EventView> eventViewList = new ArrayList<>();
-        if (orderEventViewList.isEmpty()) {
+        if (eventList.isEmpty()) {
             return eventViewList;
         } else {
-            for (OrderEventView orderEventView : orderEventViewList) {
-                eventViewList.add(toEventView(orderEventView));
+            for (Event event : eventList) {
+                eventViewList.add(toEventView(event));
             }
             return eventViewList;
         }
     }
 
-    private static EventView toEventView(OrderEventView orderEventView) {
+    private static EventView toEventView(Event event) {
         return EventView.builder()
-                .oderId(orderEventView.getOrderId())
-                .employeeId(orderEventView.getEmployeeId())
-                .status(orderEventView.getStatus())
-                .timeStamp(orderEventView.getTimeStamp())
+                .oderId(event.getOrderId())
+                .employeeId(event.getEmployeeId())
+                .status(event.getStatus())
+                .timeStamp(event.getTimeStamp())
                 .build();
     }
 

@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "2c8877a6-42c4-46e0-9642-aa35279741d8",
+		"name": "Test CofeeOrders Проверка заказов после приготовления",
+		"description": "Запускать через 15 секунд после выполнения тестов Test CofeeOrders Создания заказов",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24809047"
+	},
+	"item": [
+		{
+			"name": "Get Orders after ready",
+			"item": [
+				{
+					"name": "Get order1 after ready",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(200);   \r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"const target = pm.response.json();\r",
+									"var query = {};\r",
+									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});\r",
+									"\r",
+									"pm.test(\"Запрос на участие должен содержать поля orderId, customerId, employeeId, productId, price, status, registeredTime, expectedTimeOfIssue, events\", function () {\r",
+									"pm.expect(target).to.have.property('orderId');\r",
+									"pm.expect(target).to.have.property('customerId');\r",
+									"pm.expect(target).to.have.property('employeeId');\r",
+									"pm.expect(target).to.have.property('productId');\r",
+									"pm.expect(target).to.have.property('price');\r",
+									"pm.expect(target).to.have.property('status');\r",
+									"pm.expect(target).to.have.property('registeredTime');\r",
+									"pm.expect(target).to.have.property('expectedTimeOfIssue');\r",
+									"pm.expect(target).to.have.property('events');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие orderId, customerId, employeeId, productId\", function () {\r",
+									"    pm.expect(target.orderId).equal(1);\r",
+									"    pm.expect(target.customerId).equal(1);\r",
+									"    pm.expect(target.employeeId).equal(1);\r",
+									"    pm.expect(target.productId).equal(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие статуса READY\", function () {\r",
+									"    pm.expect(target.status).equal(\"READY\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{order1 Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{order1 Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get order2 after ready",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(200);   \r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"const target = pm.response.json();\r",
+									"var query = {};\r",
+									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});\r",
+									"\r",
+									"pm.test(\"Запрос на участие должен содержать поля orderId, customerId, employeeId, productId, price, status, registeredTime, expectedTimeOfIssue, events\", function () {\r",
+									"pm.expect(target).to.have.property('orderId');\r",
+									"pm.expect(target).to.have.property('customerId');\r",
+									"pm.expect(target).to.have.property('employeeId');\r",
+									"pm.expect(target).to.have.property('productId');\r",
+									"pm.expect(target).to.have.property('price');\r",
+									"pm.expect(target).to.have.property('status');\r",
+									"pm.expect(target).to.have.property('registeredTime');\r",
+									"pm.expect(target).to.have.property('expectedTimeOfIssue');\r",
+									"pm.expect(target).to.have.property('events');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие orderId, customerId, employeeId, productId\", function () {\r",
+									"    pm.expect(target.orderId).equal(2);\r",
+									"    pm.expect(target.customerId).equal(2);\r",
+									"    pm.expect(target.employeeId).equal(1);\r",
+									"    pm.expect(target.productId).equal(2);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Соответствие статуса READY\", function () {\r",
+									"    pm.expect(target.status).equal(\"READY\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{order2 Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{order2 Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "customer1 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "customer2 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "product1 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "product2 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "employee1 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "employee2 Id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "order1 Id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "order2 Id",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

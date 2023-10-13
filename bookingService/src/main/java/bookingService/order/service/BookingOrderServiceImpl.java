@@ -65,12 +65,15 @@ public class BookingOrderServiceImpl implements BookingOrderService {
         orderEvent.setOrderId(getOrderId());
         Employee employee = employeeService.getAvaibleEmployee();
         orderEvent.setEmployeeId(employee.getId());
-        if (employee.getTimeToAvailable() == null) {
-            sendAcceptedEventRightNow(orderEvent, product, employee);
-        } else if (employee.getTimeToAvailable().isBefore(LocalDateTime.now())) {
+        LocalDateTime timeToAvailable = employee.getTimeToAvailable();
+        if (timeToAvailable == null) {
             sendAcceptedEventRightNow(orderEvent, product, employee);
         } else {
-            sendAcceptedEventAfterEmployeeAvailable(orderEvent, product, employee);
+            if (timeToAvailable.isBefore(LocalDateTime.now())) {
+                sendAcceptedEventRightNow(orderEvent, product, employee);
+            } else {
+                sendAcceptedEventAfterEmployeeAvailable(orderEvent, product, employee);
+            }
         }
     }
 
@@ -111,21 +114,25 @@ public class BookingOrderServiceImpl implements BookingOrderService {
     }
 
     private void sendAcceptedEventRightNow(OrderEvent orderEvent, Product product, Employee employee) {
-        orderEvent.setExpectedTimeOfIssue(LocalDateTime.now().plusSeconds(product.getCookingTime()));
+        OrderEvent registeredEvent = orderEvent;
+        registeredEvent.setStatus("REGISTERED");
+        registeredEvent.setExpectedTimeOfIssue(LocalDateTime.now().plusSeconds(product.getCookingTime()));
+        orderEventClient.post("", new HashMap<>(), registeredEvent);
         employee.setTimeToAvailable(orderEvent.getExpectedTimeOfIssue());
         employee.setCountOrder(employee.getCountOrder() + 1);
         employeeService.updateEmployee(employee.getId(), employee);
-        orderEventClient.post("", new HashMap<>(), orderEvent);
         sendAcceptedEvent(orderEvent);
-        Timer timer = new Timer();
+        Timer timer = new Timer(true);
         timer.schedule(new TimeTaskReady(orderEvent.getOrderId()),
                 Date.from(orderEvent.getExpectedTimeOfIssue().atZone(ZoneId.systemDefault()).toInstant()));
     }
 
     private void sendAcceptedEventAfterEmployeeAvailable(OrderEvent orderEvent, Product product, Employee employee) {
-        orderEvent.setExpectedTimeOfIssue(employee.getTimeToAvailable().plusSeconds(product.getCookingTime()));
-        orderEventClient.post("", new HashMap<>(), orderEvent);
-        Timer timer = new Timer();
+        OrderEvent registeredEvent = orderEvent;
+        registeredEvent.setStatus("REGISTERED");
+        registeredEvent.setExpectedTimeOfIssue(employee.getTimeToAvailable().plusSeconds(product.getCookingTime()));
+        orderEventClient.post("", new HashMap<>(), registeredEvent);
+        Timer timer = new Timer(true);
         timer.schedule(new TimeTaskAccepted(orderEvent.getOrderId()),
                 Date.from(employee.getTimeToAvailable().atZone(ZoneId.systemDefault()).toInstant()));
         employee.setTimeToAvailable(orderEvent.getExpectedTimeOfIssue());
@@ -151,13 +158,13 @@ public class BookingOrderServiceImpl implements BookingOrderService {
     }
 
     private static void sendReadyEvent(OrderEvent orderEvent) {
-        OrderEvent acceptedEvent = OrderEvent.builder()
+        OrderEvent readyEvent = OrderEvent.builder()
                 .orderId(orderEvent.getOrderId())
                 .employeeId(orderEvent.getEmployeeId())
                 .status("READY")
                 .timeStamp(LocalDateTime.now())
                 .build();
-        orderEventClient.post("", new HashMap<>(), acceptedEvent);
+        orderEventClient.post("", new HashMap<>(), readyEvent);
     }
 
     private static class TimeTaskAccepted extends TimerTask {
