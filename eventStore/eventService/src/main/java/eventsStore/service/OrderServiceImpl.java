@@ -34,11 +34,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findOrder(int id) {
         Event event = eventRepository.findRegisteredEvent(id);
-        Event toReturn = event;
         List<EventView> eventViewList = EventMapper.toEventViewList(eventRepository.findEventList(id));
         Event lastEvent = eventRepository.findLastEvent(id);
-        toReturn.setStatus(lastEvent.getStatus());
-        Order order = EventMapper.eventToOrder(toReturn, eventViewList);
+        Order order = EventMapper.eventToOrder(event, eventViewList);
+        order.setStatus(lastEvent.getStatus());
         return order;
     }
 

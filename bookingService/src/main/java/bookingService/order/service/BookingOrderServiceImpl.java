@@ -122,8 +122,10 @@ public class BookingOrderServiceImpl implements BookingOrderService {
         employee.setCountOrder(employee.getCountOrder() + 1);
         employeeService.updateEmployee(employee.getId(), employee);
         sendAcceptedEvent(orderEvent);
-        Timer timer = new Timer(true);
-        timer.schedule(new TimeTaskReady(orderEvent.getOrderId()),
+        Thread thread = new Thread();
+        thread.start();
+        Timer timer = new Timer();
+        timer.schedule(new TimeTaskReady(orderEvent.getOrderId(), thread, timer),
                 Date.from(orderEvent.getExpectedTimeOfIssue().atZone(ZoneId.systemDefault()).toInstant()));
     }
 
@@ -132,13 +134,18 @@ public class BookingOrderServiceImpl implements BookingOrderService {
         registeredEvent.setStatus("REGISTERED");
         registeredEvent.setExpectedTimeOfIssue(employee.getTimeToAvailable().plusSeconds(product.getCookingTime()));
         orderEventClient.post("", new HashMap<>(), registeredEvent);
+        Thread thread = new Thread();
+        thread.start();
         Timer timer = new Timer(true);
-        timer.schedule(new TimeTaskAccepted(orderEvent.getOrderId()),
+        timer.schedule(new TimeTaskAccepted(orderEvent.getOrderId(), thread, timer),
                 Date.from(employee.getTimeToAvailable().atZone(ZoneId.systemDefault()).toInstant()));
         employee.setTimeToAvailable(orderEvent.getExpectedTimeOfIssue());
         employee.setCountOrder(employee.getCountOrder() + 1);
         employeeService.updateEmployee(employee.getId(), employee);
-        timer.schedule(new TimeTaskReady(orderEvent.getOrderId()),
+        Thread threadReady = new Thread();
+        threadReady.start();
+        Timer timerReady = new Timer();
+        timer.schedule(new TimeTaskReady(orderEvent.getOrderId(), threadReady, timerReady),
                 Date.from(orderEvent.getExpectedTimeOfIssue().atZone(ZoneId.systemDefault()).toInstant()));
     }
 
@@ -171,8 +178,14 @@ public class BookingOrderServiceImpl implements BookingOrderService {
 
         private int orderId;
 
-        public TimeTaskAccepted(int orderId) {
+        private Thread thread;
+
+        private Timer timer;
+
+        public TimeTaskAccepted(int orderId, Thread thread, Timer timer) {
             this.orderId = orderId;
+            this.thread = thread;
+            this.timer = timer;
         }
 
         @Override
@@ -181,6 +194,8 @@ public class BookingOrderServiceImpl implements BookingOrderService {
             if (!orderEvent.getStatus().equals("CANCELLED")) {
                 sendAcceptedEvent(orderEvent);
             }
+            thread.interrupt();
+            timer.cancel();
         }
 
     }
@@ -189,8 +204,14 @@ public class BookingOrderServiceImpl implements BookingOrderService {
 
         private int orderId;
 
-        public TimeTaskReady(int orderId) {
+        private Thread thread;
+
+        private Timer timer;
+
+        public TimeTaskReady(int orderId, Thread thread, Timer timer) {
             this.orderId = orderId;
+            this.thread = thread;
+            this.timer = timer;
         }
 
         @Override
@@ -199,6 +220,8 @@ public class BookingOrderServiceImpl implements BookingOrderService {
             if (!orderEvent.getStatus().equals("CANCELLED")) {
                 sendReadyEvent(orderEvent);
             }
+            thread.interrupt();
+            timer.cancel();
         }
 
     }
